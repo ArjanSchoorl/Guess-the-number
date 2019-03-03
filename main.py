@@ -1,9 +1,5 @@
 from random import randint
 
-state = 0
-x = 0  # Minimum range
-y = 100  # Maximum range
-
 
 def integer(val):
     try:
@@ -30,6 +26,8 @@ def out_of_range(val):
     else:
         return True
 
+
+state = 0
 
 while True:
     while state == 0:
