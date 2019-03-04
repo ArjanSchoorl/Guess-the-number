@@ -40,7 +40,7 @@ def out_of_range(num):
         return True
 
 
-# Declare the state and 
+# Declare the state and
 state = 0
 print("Guess the number!")
 
@@ -67,8 +67,8 @@ while True:
 
     while state == 1:
         # Get a guessed number from the user
-        # That number is stored in a list 
-        # If the user is correct the state will go to zero 
+        # That number is stored in a list
+        # If the user is correct the state will go to zero
         # Otherwise the user has to guess again
         guess_number = input(f"Guess the number from {str(x)} to {str(y)}: ")
         # If the guessed number is an integer and in the range
@@ -103,6 +103,6 @@ while True:
                 print("")
                 state = 0
         # If the guessed number is not an integer or out of the range
-        # Then go back to state one and the user has to guess another number 
+        # Then go back to state one and the user has to guess another number
         else:
             state = 1
