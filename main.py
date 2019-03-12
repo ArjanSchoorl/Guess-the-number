@@ -1,108 +1,113 @@
 from random import randint
 
 
-# This function checks if the val is an integer
-def integer(val):
-    try:
-        # Trying to get the integer of val
-        int(val)
-        # Return True if val is an integer
-        return True
-    except ValueError:
-        # If val is not an integer than print sentence and return False
-        print("This is not a number, please full in a number!")
-        return False
+# This is the main function
+def main():
+    while True:
+        # Get the input from the user
+        print()
+        continu = input("Do you want to continue? Yes/No: ").lower()
+        # If the user will continue, run the function guess()
+        if continu == 'y' or continu == 'yes':
+            guess()
+        # If the user do not want to continue, close the program
+        else:
+            print("Closing...")
+            return False
 
 
-# This function checks if the minimum is greater or equal to the maximum
-def min_max_range(min, max):
-    if int(min) >= int(max):
-        # If the minimum is greater or equal to the maximum
-        # Then print the sentence and return False
-        print("Minimum is greater than maximum")
-        print("")
-        return False
+# This function is the where everything is processed
+# In this function the user get the answer to their input
+def guess():
+    # Get the minimum and maximum numbers
+    # Those numbers are for the range to guess
+    num_min = input("Give a minimum number: ")
+    num_max = input("Give a maximum number: ")
+    # If the input numbers are integers and the minimum is less then the maximum
+    # It will run the code below here
+    if check_input(num_min, num_max):
+        # This creates a random number between the range 
+        num_random = randint(int(num_min), int(num_max))
+        # This creates a list to store the guessed numbers
+        num_list = []
+        # This counts how many times the user has tried
+        count = 0
+        # Go to state 1
+        state = 1
+        while state == 1:
+            print()
+            # Get a guessed number from the user
+            num_guess = input(f"Guess the number from {str(num_min)} to {str(num_max)}: ")
+            # This will check if the number is an int and if the number is in range
+            if integer(num_guess) and in_range(num_guess, num_min, num_max):
+                # If so the number will be stored in the list
+                num_list.append(int(num_guess))
+                num_list.sort()
+                count = count + 1
+                # If the guessed number is greater than the random number
+                # Then print the sentence and print the list with already guessed numbers
+                if int(num_guess) > num_random:
+                    print(f"Number {num_guess} is too high")
+                    print(f"Guessed numbers: {num_list}")
+                # If the guessed number is less than the random number
+                # Then print the sentence and print the list with already guessed numbers
+                elif int(num_guess) < num_random:
+                    print(f"Number {num_guess} is too low")
+                    print(f"Guessed numbers: {num_list}")
+                # If the user guessed the random number
+                # Print that he guessed the number and how many times it took
+                # Then return False
+                else:
+                    print(f"You guess the number! Number: {num_guess}")
+                    print(f"It took {count} times to guess the number")
+                    return False
+            # Go back to state 1
+            else:
+                state = 1
+    # Print the sentence and return False
     else:
-        # If the minimum is less than maximum return True
+        print("Mininum or maximum is not a number or the minimum is greater then the maximum")
+        return False
+
+
+# This function checks if the numbers are an integer
+def check_input(num1, num2):
+    # Trying to get the integer of num1 and num2
+    try:
+        int(num1)
+        int(num2)
+        # If those are integers, then check if num2 is greater than num1
+        # Then return True
+        if int(num1) < int(num2):
+            return True
+    # If the above is not True, return  False
+    except ValueError:
+        return False
+
+
+# This function checks if the number is an integer
+def integer(num):
+    # Trying to get the integer of num
+    try:
+        int(num)
         return True
+    # If num is not an integer than print the sentence and return False
+    except ValueError:
+        print("Your input is not a number")
+        return False
 
 
 # This function checks if the number that is given is in between the range
-def out_of_range(num):
-    if int(num) < int(x) or int(num) > int(y):
-        # If the number is less than the minimum or the number is greater than the maximum
-        # Then print the sentence and return False
-        print("Out of range!")
-        print("")
+def in_range(num, num_min, num_max):
+    # If the number is less than the minimum or the number is greater than the maximum
+    # Then print the sentence and return False
+    if int(num) < int(num_min) or int(num) > int(num_max):
+        print("The guessed number is out of range")
         return False
+    # If the number is in range then return True
     else:
-        # If the number is in range then return True
         return True
 
 
-# Declare the state and
-state = 0
-print("Guess the number!")
-
-
-# Start the game - Guess the number
-while True:
-    while state == 0:
-        # Get the minimum and maximimum for the range
-        print("")
-        x = input("Give a minimum number: ")
-        y = input("Give a maximum number: ")
-        if min_max_range(x, y):
-            # If min_max_range() returns True then get a random_number
-            # And create a list for the used numbers and go to state one
-            random_number = randint(int(x), int(y))
-            num_list = []
-
-            # This is to debug the program, You will know the random_number
-            # print(random_number)
-            state = 1
-        else:
-            # if min_max_range() returns False, try again by change the state to zero
-            state = 0
-
-    while state == 1:
-        # Get a guessed number from the user
-        # That number is stored in a list
-        # If the user is correct the state will go to zero
-        # Otherwise the user has to guess again
-        guess_number = input(f"Guess the number from {str(x)} to {str(y)}: ")
-        # If the guessed number is an integer and in the range
-        # Then check if the number is too low or too high or is correct
-        if integer(guess_number) and out_of_range(guess_number):
-            # Add the guessed number to the list
-            num_list.append(int(guess_number))
-            num_list.sort()
-            if int(guess_number) > random_number:
-                # If the guessed number is greater than the random number
-                # Then print the sentence and give the list with already guessed numbers
-                # And change the state to one
-                print(f"Number {guess_number} is too high")
-                print(f"Guessed numbers: {num_list}")
-                print("")
-                state = 1
-
-            elif int(guess_number) < random_number:
-                # If the guessed number is less than the random number
-                # Then print the sentence and give the list with already guessed numbers
-                # And change the state to one
-                print(f"Number {guess_number} is too low")
-                print(f"Guessed numbers: {num_list}")
-                print("")
-                state = 1
-
-            else:
-                # If the guessed number is equal to the random number
-                # Then print that the user guessed the number
-                # And change the state to zero
-                print("You guessed the number!")
-                print("")
-                state = 0
-        # If the guessed number is not an integer or out of the range
-        # Then go back to state one and the user has to guess another number
-        else:
-            state = 1
+# Run the main function
+main()
