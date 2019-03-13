@@ -29,7 +29,7 @@ def guess():
         # This creates a random number between the range 
         num_random = randint(int(num_min), int(num_max))
         # This creates a list to store the guessed numbers
-        num_list = []
+        num_list = set()
         # This counts how many times the user has tried
         count = 0
         # Go to state 1
@@ -41,8 +41,7 @@ def guess():
             # This will check if the number is an int and if the number is in range
             if integer(num_guess) and in_range(num_guess, num_min, num_max):
                 # If so the number will be stored in the list
-                num_list.append(int(num_guess))
-                num_list.sort()
+                num_list.add(int(num_guess))
                 count = count + 1
                 # If the guessed number is greater than the random number
                 # Then print the sentence and print the list with already guessed numbers
